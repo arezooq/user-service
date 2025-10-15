@@ -1,12 +1,13 @@
 package services
 
 import (
-	"user-service/internal/models"
-	"user-service/internal/repositories/postgres"
 	"github.com/arezooq/open-utils/api"
 	"github.com/arezooq/open-utils/errors"
 	"github.com/arezooq/open-utils/logger"
 	"github.com/arezooq/open-utils/security"
+	"user-service/internal/helpers"
+	"user-service/internal/models"
+	"user-service/internal/repositories/postgres"
 )
 
 type userService struct {
@@ -25,6 +26,10 @@ func (u *userService) CreateUser(req *api.Request, user *models.User) (*models.U
 	if existing != nil {
 		u.log.Warn("User already exist: " + user.Email)
 		return nil, errors.ErrDuplicate
+	}
+
+	if err := helper.PreCreate(req.Ctx, user); err != nil {
+		return nil, errors.ErrUnauthorized
 	}
 
 	hashedPassword, errPass := security.HashPassword(user.Password)
@@ -68,6 +73,11 @@ func (u *userService) GetUserById(req *api.Request, uuid string) (*models.User, 
 }
 
 func (u *userService) UpdateUser(req *api.Request, uuid string, user *models.UpdateProfile) (*models.User, error) {
+	
+	if err := helper.PreUpdate(req.Ctx, user); err != nil {
+		return nil, errors.ErrUnauthorized
+	}
+
 	_, errExist := u.userRepo.GetById(uuid)
 	if errExist != nil {
 		u.log.Warn("User not found by id: " + uuid)
@@ -75,11 +85,13 @@ func (u *userService) UpdateUser(req *api.Request, uuid string, user *models.Upd
 	}
 
 	updates := map[string]any{
-		"f_name":   user.FName,
-		"l_name":   user.LName,
-		"username": user.Username,
-		"mobile":   user.Mobile,
-		"email":    user.Email,
+		"f_name":     user.FName,
+		"l_name":     user.LName,
+		"username":   user.Username,
+		"mobile":     user.Mobile,
+		"email":      user.Email,
+		"updated_by": user.UpdatedBy,
+		"updated_at": user.UpdatedAt,
 	}
 
 	updateUser, err := u.userRepo.Update(uuid, updates)
@@ -93,10 +105,14 @@ func (u *userService) UpdateUser(req *api.Request, uuid string, user *models.Upd
 }
 
 func (u *userService) DeleteUser(req *api.Request, uuid string) error {
-	_, errExist := u.userRepo.GetById(uuid)
+	user, errExist := u.userRepo.GetById(uuid)
 	if errExist != nil {
 		u.log.Warn("User not found by id: " + uuid)
 		return errors.ErrNotFound
+	}
+
+	if err := helper.PreDelete(req.Ctx, user); err != nil {
+		return errors.ErrUnauthorized
 	}
 
 	err := u.userRepo.Delete(uuid)

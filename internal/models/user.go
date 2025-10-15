@@ -14,17 +14,19 @@ type User struct {
 	Email            string     `json:"email" gorm:"column:email;uniqueIndex"`
 	EmailVerifiedAt  *time.Time `json:"email_verified_at" gorm:"column:email_verified_at"`
 	Password         string     `json:"password" gorm:"column:password;not null"`
-	CreatedBy string    `json:"created_by" gorm:"column:created_by"`
-	CreatedAt time.Time `json:"created_at" gorm:"column:created_at;autoCreateTime"`
-	UpdatedBy string    `json:"updated_by" gorm:"column:updated_by"`
-	UpdatedAt time.Time `json:"updated_at" gorm:"column:updated_at;autoUpdateTime"`
-	Status int `json:"status" gorm:"column:status;not null;default:0"` // -1=deleted, 0=inactive, 1=active
+	CreatedBy        string     `json:"created_by" gorm:"column:created_by"`
+	CreatedAt        time.Time  `json:"created_at" gorm:"column:created_at;"`
+	UpdatedBy        string     `json:"updated_by" gorm:"column:updated_by"`
+	UpdatedAt        time.Time  `json:"updated_at" gorm:"column:updated_at;"`
+	Status           int        `json:"status" gorm:"column:status;not null;default:0"` // -1=deleted, 0=inactive, 1=active
 }
 
 type UpdateProfile struct {
-	FName    string `json:"fname"`
-	LName    string `json:"lname"`
-	Username string `json:"username"`
-	Mobile   string `json:"mobile"`
-	Email    string `json:"email"`
+	FName     string    `json:"fname"`
+	LName     string    `json:"lname"`
+	Username  string    `json:"username"`
+	Mobile    string    `json:"mobile"`
+	Email     string    `json:"email"`
+	UpdatedBy string    `json:"updated_by"`
+	UpdatedAt time.Time `json:"updated_at"`
 }

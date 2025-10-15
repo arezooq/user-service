@@ -53,7 +53,7 @@ require (
 )
 
 require (
-	github.com/arezooq/open-utils v0.0.0-20251014210851-add85893c7da // indirect
+	github.com/arezooq/open-utils v0.0.0-20251015075744-6013d4ceb48c // indirect
 	github.com/gin-gonic/gin v1.11.0
 	github.com/golang-jwt/jwt/v5 v5.3.0
 	github.com/jinzhu/inflection v1.0.0 // indirect

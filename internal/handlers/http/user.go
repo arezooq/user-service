@@ -5,6 +5,7 @@ import (
 
 	"github.com/arezooq/open-utils/api"
 	"github.com/arezooq/open-utils/errors"
+	"github.com/arezooq/open-utils/jwt"
 	"github.com/gin-gonic/gin"
 	"user-service/internal/models"
 )
@@ -12,6 +13,12 @@ import (
 // Create
 func (h *handler) Create(c *gin.Context) {
 	req := api.New(c, "user-service", "v1")
+
+	_, err := jwt.ExtractTokenFromHeader(c)
+	if err != nil {
+		api.FromAppError(c, errors.ErrUnauthorized, nil)
+		return
+	}
 
 	user := &models.User{}
 	if err := req.BindJSON(user); err != nil {
