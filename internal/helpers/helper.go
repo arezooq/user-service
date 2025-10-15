@@ -1,12 +1,12 @@
 package helper
 
 import (
+	"github.com/arezooq/open-utils/api"
 	"time"
 	"user-service/internal/models"
 
 	"github.com/arezooq/open-utils/jwt"
 	"github.com/arezooq/open-utils/uuid"
-	"github.com/gin-gonic/gin"
 )
 
 type AuditFields struct {
@@ -17,8 +17,8 @@ type AuditFields struct {
 }
 
 // Pre Create
-func PreCreate(c *gin.Context, user *models.User) error {
-	token, err := jwt.ExtractTokenFromHeader(c)
+func PreCreate(req *api.Request, user *models.User) error {
+	token, err := jwt.ExtractTokenFromHeader(req)
 
 	userID, err := jwt.ExtractUserIDFromToken(token)
 	if err != nil {
@@ -37,8 +37,8 @@ func PreCreate(c *gin.Context, user *models.User) error {
 }
 
 // Pre Update
-func PreUpdate(c *gin.Context, user *models.UpdateProfile) error {
-	token, err := jwt.ExtractTokenFromHeader(c)
+func PreUpdate(req *api.Request, user *models.UpdateProfile) error {
+	token, err := jwt.ExtractTokenFromHeader(req)
 
 	userID, err := jwt.ExtractUserIDFromToken(token)
 	if err != nil {
@@ -54,8 +54,8 @@ func PreUpdate(c *gin.Context, user *models.UpdateProfile) error {
 }
 
 // Pre Delete
-func PreDelete(c *gin.Context, user *models.User) error {
-	token, err := jwt.ExtractTokenFromHeader(c)
+func PreDelete(req *api.Request, user *models.User) error {
+	token, err := jwt.ExtractTokenFromHeader(req)
 
 	userID, err := jwt.ExtractUserIDFromToken(token)
 	if err != nil {

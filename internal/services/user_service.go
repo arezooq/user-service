@@ -28,7 +28,7 @@ func (u *userService) CreateUser(req *api.Request, user *models.User) (*models.U
 		return nil, errors.ErrDuplicate
 	}
 
-	if err := helper.PreCreate(req.Ctx, user); err != nil {
+	if err := helper.PreCreate(req, user); err != nil {
 		return nil, errors.ErrUnauthorized
 	}
 
@@ -73,8 +73,8 @@ func (u *userService) GetUserById(req *api.Request, uuid string) (*models.User, 
 }
 
 func (u *userService) UpdateUser(req *api.Request, uuid string, user *models.UpdateProfile) (*models.User, error) {
-	
-	if err := helper.PreUpdate(req.Ctx, user); err != nil {
+
+	if err := helper.PreUpdate(req, user); err != nil {
 		return nil, errors.ErrUnauthorized
 	}
 
@@ -111,7 +111,7 @@ func (u *userService) DeleteUser(req *api.Request, uuid string) error {
 		return errors.ErrNotFound
 	}
 
-	if err := helper.PreDelete(req.Ctx, user); err != nil {
+	if err := helper.PreDelete(req, user); err != nil {
 		return errors.ErrUnauthorized
 	}
 

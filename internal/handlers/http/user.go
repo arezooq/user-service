@@ -10,11 +10,20 @@ import (
 	"user-service/internal/models"
 )
 
-// Create
+// CreateUser godoc
+// @Summary Create a new user
+// @Description Create a new user with email and password
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param user body models.User true "User info"
+// @Success 201 {object} models.User
+// @Failure 400 {object} api.ErrorResponse
+// @Router /users [post]
 func (h *handler) Create(c *gin.Context) {
 	req := api.New(c, "user-service", "v1")
 
-	_, err := jwt.ExtractTokenFromHeader(c)
+	_, err := jwt.ExtractTokenFromHeader(c, req)
 	if err != nil {
 		api.FromAppError(c, errors.ErrUnauthorized, nil)
 		return
