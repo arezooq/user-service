@@ -87,6 +87,8 @@ github.com/arezooq/open-utils v0.0.0-20251015081605-02202d0dcc91 h1:jqaOB4vm6N7U
 github.com/arezooq/open-utils v0.0.0-20251015081605-02202d0dcc91/go.mod h1:069DXDm9bGyBm30Bd22KkDwdkn0FUtWW9xFw3R+UtJ4=
 github.com/arezooq/open-utils v0.0.0-20251015131328-1246c627226a h1:KR4izpMj+a3hsZ0ATqp8BrKHnnPl/8fYdQ1tIqzfAO4=
 github.com/arezooq/open-utils v0.0.0-20251015131328-1246c627226a/go.mod h1:069DXDm9bGyBm30Bd22KkDwdkn0FUtWW9xFw3R+UtJ4=
+github.com/arezooq/open-utils v0.0.0-20251015142244-a9f439e8c847 h1:vP2XZd1eD1qZlLQleskgLqvWxsmGI/91lDbTLLkK/0w=
+github.com/arezooq/open-utils v0.0.0-20251015142244-a9f439e8c847/go.mod h1:069DXDm9bGyBm30Bd22KkDwdkn0FUtWW9xFw3R+UtJ4=
 github.com/bytedance/sonic v1.11.6 h1:oUp34TzMlL+OY1OUWxHqsdkgC/Zfc85zGqw9siXjrc0=
 github.com/bytedance/sonic v1.11.6/go.mod h1:LysEHSvpvDySVdC2f87zGWf6CIKJcAvqab1ZaiQtds4=
 github.com/bytedance/sonic v1.14.0 h1:/OfKt8HFw0kh2rj8N0F6C/qPGRESq0BbaNZgcNXXzQQ=

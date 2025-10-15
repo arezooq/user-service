@@ -18,12 +18,11 @@ import (
 // @Produce json
 // @Param user body models.User true "User info"
 // @Success 201 {object} models.User
-// @Failure 400 {object} api.ErrorResponse
 // @Router /users [post]
 func (h *handler) Create(c *gin.Context) {
 	req := api.New(c, "user-service", "v1")
 
-	_, err := jwt.ExtractTokenFromHeader(c, req)
+	_, err := jwt.ExtractTokenFromHeader(req)
 	if err != nil {
 		api.FromAppError(c, errors.ErrUnauthorized, nil)
 		return
@@ -47,7 +46,13 @@ func (h *handler) Create(c *gin.Context) {
 	api.Success(c, http.StatusCreated, "User created successfully", user)
 }
 
-// Get all
+// GetAllUsers godoc
+// @Summary Get all users
+// @Description Retrieve a list of all users
+// @Tags users
+// @Produce json
+// @Success 200 {array} models.User
+// @Router /users [get]
 func (h *handler) GetAll(c *gin.Context) {
 	req := api.New(c, "user-service", "v1")
 
@@ -64,7 +69,14 @@ func (h *handler) GetAll(c *gin.Context) {
 	api.Success(c, http.StatusOK, "Users fetched successfully", pagination.JSON(users))
 }
 
-// Get by id
+// GetUser godoc
+// @Summary Get a user by ID
+// @Description Get user details by user ID
+// @Tags users
+// @Produce json
+// @Param userId path string true "User ID"
+// @Success 200 {object} models.User
+// @Router /users/{userId} [get]
 func (h *handler) Get(c *gin.Context) {
 	req := api.New(c, "user-service", "v1")
 
@@ -85,7 +97,16 @@ func (h *handler) Get(c *gin.Context) {
 	api.Success(c, http.StatusOK, "User fetched successfully", user)
 }
 
-// Update
+// UpdateUser godoc
+// @Summary Update a user
+// @Description Update user fields like name, email, mobile
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param userId path string true "User ID"
+// @Param user body models.UpdateProfile true "Updated user info"
+// @Success 200 {object} models.User
+// @Router /users/{userId} [put]
 func (h *handler) Update(c *gin.Context) {
 	req := api.New(c, "user-service", "v1")
 
@@ -114,7 +135,14 @@ func (h *handler) Update(c *gin.Context) {
 	api.Success(c, http.StatusOK, "User updated successfully", updatedUser)
 }
 
-// Delete
+// DeleteUser godoc
+// @Summary Delete a user
+// @Description Remove user by ID
+// @Tags users
+// @Produce json
+// @Param userId path string true "User ID"
+// @Success 204
+// @Router /users/{userId} [delete]
 func (h *handler) Delete(c *gin.Context) {
 	req := api.New(c, "user-service", "v1")
 

@@ -1,16 +1,19 @@
 package main
 
 import (
-	"os"
-
+	"github.com/arezooq/open-utils/logger"
 	"github.com/gin-gonic/gin"
-
+	"os"
+	_ "user-service/docs"
 	"user-service/internal/handlers/http"
 	"user-service/internal/repositories/postgres"
 	"user-service/internal/services"
-	"github.com/arezooq/open-utils/logger"
 )
 
+// @title User Service API
+// @version 1.0
+// @description This is the User Service API documentation.
+// @BasePath /api/users
 func main() {
 	port := os.Getenv("PORT")
 
@@ -19,7 +22,7 @@ func main() {
 	// Postgres
 	pgDB, err := postgres.InitPostgres()
 	if err != nil {
-		logger.Fatal("Failed to init postgres: "+err.Error())
+		logger.Fatal("Failed to init postgres: " + err.Error())
 	}
 
 	userRepo := postgres.NewUserRepository(pgDB, logger)
@@ -29,6 +32,6 @@ func main() {
 
 	r := gin.Default()
 	userHandler.RegisterRoutes(r)
-	logger.Info("Server started on port "+port)
+	logger.Info("Server started on port " + port)
 	r.Run(":" + port)
 }
